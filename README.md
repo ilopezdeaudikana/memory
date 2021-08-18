@@ -1,3 +1,10 @@
+# Memory
+
+This is a rudimentary memory game.
+
+The stack I used for this one is `React`, `Typescript`, `React hooks`, `Redux`, `Jest` and `Scss modules`.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
