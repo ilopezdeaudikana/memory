@@ -4,6 +4,14 @@ This is a rudimentary memory game.
 
 The stack I used for this one is `React`, `Typescript`, `React hooks`, `Redux`, `Jest` and `Scss modules`.
 
+### Requirements
+* Use Redux
+* Pages need to be responsive
+* Pages
+  - Page 1 Initial page with the game start button and an input for the username.
+  - Page 2 Game page (with card flip animation)
+  - Page 3 Score page with a button and to reset the game.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
