@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { SetCards, ResetCards } from '../../store/actions/actions';
 import { usePairs, useScore } from '../../hooks';
 import { Grid } from '../../grid/grid';
 import { State } from '../../models/models';
 import { getCards } from '../../random-cards';
-import { history } from '../../history';
 
 export const Game = () => {
+  const history = useHistory();
   const [newGame, setNewGame] = useState(false);
   const dispatch = useDispatch();
   const { list } = useSelector((state: State) => state.cards);

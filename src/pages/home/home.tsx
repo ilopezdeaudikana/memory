@@ -2,10 +2,11 @@ import { FormEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { SetUser } from '../../store/actions/actions';
 import { User } from '../../models/models';
-import { history } from '../../history';
+import { useHistory } from 'react-router-dom';
 import styles from './home.module.scss';
 
 export const Home = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   useEffect(() => {

@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { State } from '../../models/models';
-import { history } from '../../history';
+import { useHistory } from 'react-router-dom';
 import styles from './score.module.scss';
 
 export const Score = () => {
+  const history = useHistory();
   const { name } = useSelector((state: State) => state.user);
   const { value } = useSelector((state: State) => state.score);
 

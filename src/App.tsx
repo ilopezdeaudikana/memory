@@ -1,14 +1,14 @@
 import './App.scss';
 import { Provider } from 'react-redux';
-import { Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Game, Score, Home } from './pages';
 import { store } from './store/store';
-import { history } from './history';
+
 
 function App() {
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <BrowserRouter>
         <div data-testid='App' className='page'>
           <Switch>
             <Route path='/game' component={Game} />
@@ -16,7 +16,7 @@ function App() {
             <Route exact path='/' component={Home} />
           </Switch>
         </div>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }

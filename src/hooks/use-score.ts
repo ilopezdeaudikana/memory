@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State, DurationRef } from '../models/models';
 import { SetScore, ResetCards } from '../store/actions/actions';
-import { history } from '../history';
+import { useHistory } from 'react-router-dom';
 import { useInterval } from '../hooks';
 
 export const useScore = () => {
+  const history = useHistory();
   const [duration, setDuration] = useState(0);
   const dispatch = useDispatch();
   const { paired, list } = useSelector((state: State) => state.cards);
@@ -30,5 +31,5 @@ export const useScore = () => {
       }, 1000);
       return () => clearInterval(timeout);
     }
-  }, [paired, durationIntervalRef, list.length, dispatch, durationRef]);
+  }, [paired, durationIntervalRef, list.length, dispatch, history, durationRef]);
 };
