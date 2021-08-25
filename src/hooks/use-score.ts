@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State, DurationRef } from '../models/models';
 import { SetScore, ResetCards } from '../store/actions/actions';
@@ -7,16 +7,13 @@ import { useInterval } from '../hooks';
 
 export const useScore = () => {
   const history = useHistory();
-  const [duration, setDuration] = useState(0);
   const dispatch = useDispatch();
   const { paired, list } = useSelector((state: State) => state.cards);
   const [durationIntervalRef, durationRef] = useInterval(
     (durationRef: DurationRef) => {
       durationRef.current++;
-      setDuration(durationRef.current);
     },
     1000,
-    duration
   );
   useEffect(() => {
     if (paired.length > 0 && paired.length === list.length) {

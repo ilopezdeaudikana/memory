@@ -4,11 +4,11 @@ import { useCallback, useEffect, useRef } from 'react';
 export const useInterval = (
   callback: Function,
   delay: number,
-  duration: number
 ) => {
+ 
   const durationIntervalRef: IntervalRef = useRef(null);
 
-  const durationRef = useRef(duration);
+  const durationRef = useRef(0);
 
   const handler = useCallback(() => {
     callback(durationRef);
