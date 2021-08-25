@@ -10,7 +10,7 @@ The stack I used for this one is `React`, `Typescript`, `React hooks`, `Redux`, 
 * Pages
   - Page 1 Initial page with the game start button and an input for the username.
   - Page 2 Game page (with card flip animation)
-  - Page 3 Score page with a button and to reset the game.
+  - Page 3 Score page with a button to reset the game.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
