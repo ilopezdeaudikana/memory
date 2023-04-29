@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { SetCards, ResetCards } from '../../store/actions/actions';
+import { useNavigate } from 'react-router-dom';
 import { usePairs, useScore } from '../../hooks';
 import { Grid } from '../../grid/grid';
 import { State } from '../../models/models';
 import { getCards } from '../../random-cards';
+import { resetCards, setCards } from '../../store/slices/cards-slice';
 
 export const Game = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [newGame, setNewGame] = useState(false);
   const dispatch = useDispatch();
   const { list } = useSelector((state: State) => state.cards);
   const { name } = useSelector((state: State) => state.user);
 
   if (!name) {
-    history.push('/');
+    navigate('/');
   }
 
   useEffect(() => {
     const pairedCards = getCards();
-    dispatch(SetCards(pairedCards));
+    dispatch(setCards(pairedCards));
   }, [dispatch, newGame]);
 
   usePairs();
@@ -28,7 +28,7 @@ export const Game = () => {
   useScore();
 
   const restart = () => {
-    dispatch(ResetCards());
+    dispatch(resetCards());
     setNewGame(!newGame);
   };
 

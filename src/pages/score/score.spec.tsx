@@ -1,10 +1,13 @@
 import { Score } from './score';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { BrowserRouter } from 'react-router-dom';
+
 afterEach(cleanup);
 
 describe('User Form', () => {
+
   it('Inputing text enables the button', async () => {
     const mockStore = configureStore();
 
@@ -12,15 +15,17 @@ describe('User Form', () => {
       user: { name: 'test user', id: 400 },
       score: { value: 50 },
     });
-    const { getByTestId } = render(
+    render(
       <Provider store={store}>
-        <Score />
+        <BrowserRouter>
+          <Score />
+        </BrowserRouter>
       </Provider>
     );
 
-    const congrats = getByTestId('congrats');
+    const congrats = screen.getByTestId('congrats');
     expect(congrats).toHaveTextContent('Congratulations: test user');
-    const score = getByTestId('score');
+    const score = screen.getByTestId('score');
     expect(score).toHaveTextContent('Score: 50');
   });
 });

@@ -1,6 +1,14 @@
 import { usePairs } from './use-pairs';
 import { render, cleanup, waitFor } from '@testing-library/react';
-import * as reactRedux from 'react-redux';
+import * as Redux from 'react-redux';
+
+jest.mock('react-redux', () => {
+  return {
+    ...jest.requireActual('react-redux'),
+    useDispatch: jest.fn(),
+    useSelector: jest.fn()
+  }
+})
 
 const TestComponent = () => {
   usePairs();
@@ -9,19 +17,22 @@ const TestComponent = () => {
 
 afterEach(cleanup);
 
-let useSelectorMock: any;
-let useDispatchMock: any;
-let mockedDispatch: any;
+const mockDispatch = {
+  dispatch: jest.fn()
+}
+let dispatch: jest.SpyInstance<any, any, any>
+
 describe('UsePairs hook', () => {
+
   beforeEach(() => {
-    mockedDispatch = jest.fn();
-    useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
-    useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    (useDispatchMock as jest.Mock).mockReturnValue(mockedDispatch);
-  });
+    ;(Redux.useDispatch as jest.Mock).mockImplementation(() => {
+      return mockDispatch.dispatch
+    })
+    dispatch = jest.spyOn(mockDispatch, 'dispatch')
+  })
 
   it('should dispatch', async () => {
-    (useSelectorMock as jest.Mock).mockReturnValue({
+    (Redux.useSelector as jest.Mock).mockReturnValue({
         visible: [
           { id: 1, value: 12 },
           { id: 10, value: 11 },
@@ -29,14 +40,14 @@ describe('UsePairs hook', () => {
       },
     );
     render(<TestComponent />);
-    await waitFor(() => expect(mockedDispatch).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(dispatch).toHaveBeenCalledTimes(1));
   });
 
   it('should not dispatch', async () => {
-    (useSelectorMock as jest.Mock).mockReturnValue(
+    (Redux.useSelector as jest.Mock).mockReturnValue(
        { visible: [] },
     );
     render(<TestComponent />);
-    await waitFor(() => expect(mockedDispatch).not.toHaveBeenCalled());
+    await waitFor(() => expect(dispatch).not.toHaveBeenCalled());
   });
 });

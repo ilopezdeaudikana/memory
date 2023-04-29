@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Card, State } from '../models/models';
 import { useDispatch, useSelector } from 'react-redux';
-import { SelectCard } from '../store/actions/actions';
 import styles from './card.module.scss';
+import { selectCard } from '../store/slices/cards-slice';
 
 export const MemoryCard: React.FC<Card> = ({ id, value }) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export const MemoryCard: React.FC<Card> = ({ id, value }) => {
     if (isSelected || isAnimationOn) {
       return;
     }
-    dispatch(SelectCard({ id, value }));
+    dispatch(selectCard({ id, value }));
     setSelected(true);
   };
 

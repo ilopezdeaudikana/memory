@@ -1,16 +1,16 @@
 import { FormEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { SetUser } from '../../store/actions/actions';
 import { User } from '../../models/models';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './home.module.scss';
+import { setUser } from '../../store/slices/user-slice';
 
 export const Home = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   useEffect(() => {
-    dispatch(SetUser({ name: '', id: 0 }));
+    dispatch(setUser({ name: '', id: 0 }));
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -19,8 +19,8 @@ export const Home = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user: User = { name, id: Math.random() };
-    dispatch(SetUser(user));
-    history.push('/game');
+    dispatch(setUser(user));
+    navigate('/game');
   };
   return (
     <form

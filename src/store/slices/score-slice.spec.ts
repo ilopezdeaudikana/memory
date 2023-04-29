@@ -1,15 +1,12 @@
-import { Score } from './../../models/models';
-import { MemoryActions } from '../actions/actions';
-import { scoreReducer } from './score.reducer';
-
+import { Score } from '../../models/models';
+import scoreReducer, {
+  setScore,
+} from './score-slice'
 const score: Score = { value: 80 };
 
-describe('userReducer', () => {
+describe('scoreReducer', () => {
   it('should set a user', () => {
-    const state = scoreReducer({value: 0}, {
-      type: MemoryActions.SET_SCORE,
-      payload: score,
-    });
+    const state = scoreReducer({value: 0}, setScore(score));
     expect(state.value).toBe(80);
   });
 

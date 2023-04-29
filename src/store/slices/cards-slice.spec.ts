@@ -1,55 +1,48 @@
-import { Card, CardsState } from './../../models/models';
-import { MemoryActions } from '../actions/actions';
-import { cardsReducer } from './cards.reducer';
+import { Card } from '../../models/models'
+import cardsReducer, {
+  setCards,
+  selectCard,
+  resetVisibleCards,
+  resetCards,
+  toggleAnimation,
+  CardsSlice
+} from './cards-slice'
 
-const card: Card = { id: 5, value: 9 };
+const card: Card = { id: 5, value: 9 }
 
-const initialState: CardsState = {
+const initialState: CardsSlice = {
   list: [],
   isAnimationOn: false,
   visible: [],
-  paired: [],
-};
+  paired: []
+}
+
 describe('cardsReducer', () => {
+
   it('should set cards', () => {
-    const state = cardsReducer(initialState, {
-      type: MemoryActions.SET_CARDS,
-      payload: [card],
-    });
+    const state = cardsReducer(initialState, setCards([card]));
     expect(state.list).toEqual([card]);
   });
 
   it('should select a card', () => {
-    const state = cardsReducer(initialState, {
-      type: MemoryActions.SELECT_CARD,
-      payload: card,
-    });
+    const state = cardsReducer(initialState, selectCard(card));
     expect(state.visible).toEqual([card]);
   });
 
   it('should add cards to paired', () => {
     const newState = { ...initialState, visible: [card] };
-    const state = cardsReducer(newState, {
-      type: MemoryActions.SELECT_CARD,
-      payload: { ...card, id: 50 },
-    });
+    const state = cardsReducer(newState, selectCard({ ...card, id: 50 }));
     expect(state.paired).toEqual([card, { id: 50, value: 9 }]);
   });
 
   it('should toggle isAnimationOn', () => {
-    const state = cardsReducer(initialState, {
-      type: MemoryActions.TOGGLE_IS_ANIMATION_ON,
-      payload: true,
-    });
+    const state = cardsReducer(initialState, toggleAnimation(true));
     expect(state.isAnimationOn).toBe(true);
   });
 
   it('should reset visible, paired and isAnimationOn', () => {
     const newState = { list: [], visible: [card], paired: [card], isAnimationOn: true };
-    const state = cardsReducer(newState, {
-      type: MemoryActions.RESET_CARDS,
-      payload: null,
-    });
+    const state = cardsReducer(newState, resetCards());
     expect(state.isAnimationOn).toBe(false);
     expect(state.paired).toEqual([]);
     expect(state.visible).toEqual([]);
@@ -57,10 +50,7 @@ describe('cardsReducer', () => {
 
   it('should reset visible', () => {
     const newState = { ...initialState, visible: [card] };
-    const state = cardsReducer(newState, {
-      type: MemoryActions.RESET_VISIBLE_CARDS,
-      payload: null,
-    });
+    const state = cardsReducer(newState, resetVisibleCards());
     expect(state.visible).toEqual([]);
   });
 

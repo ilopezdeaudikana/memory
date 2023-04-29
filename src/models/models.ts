@@ -1,3 +1,5 @@
+import { CardsSlice } from '../store/slices/cards-slice';
+
 export interface Action {
   type: string;
   payload: any;
@@ -17,16 +19,10 @@ export interface Score {
   value: number;
 }
 
-export interface CardsState {
-  list: Card[];
-  paired: Card[];
-  visible: Card[];
-  isAnimationOn: boolean
-}
 
 export interface State {
-  cards: CardsState;
-  user: User,
+  cards: CardsSlice
+  user: User
   score: Score
 }
 

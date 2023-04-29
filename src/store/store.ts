@@ -1,13 +1,13 @@
-import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './reducers/root.reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import cardsReducer from './slices/cards-slice';
+import userReducer from './slices/user-slice'
+import scoreReducer from './slices/score-slice'
 
-export const configureStore = (() => {
-  return createStore(
-    rootReducer,
-    composeWithDevTools()
-  );
-
+export const store = configureStore({
+  reducer: {
+    cards: cardsReducer,
+    user: userReducer,
+    score: scoreReducer
+  }
 });
 
-export const store = configureStore();

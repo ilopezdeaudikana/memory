@@ -1,60 +1,102 @@
-import { useScore } from './use-score';
-import { render, cleanup, waitFor } from '@testing-library/react';
-import * as reactRedux from 'react-redux';
+import { useScore } from './use-score'
+import { render, cleanup, waitFor } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store'
+import * as Redux from 'react-redux'
+
+jest.mock('react-redux', () => {
+  return {
+    ...jest.requireActual('react-redux'),
+    useDispatch: jest.fn(),
+    useSelector: jest.fn()
+  }
+})
 
 const TestComponent = () => {
-  useScore();
-  return <div></div>;
-};
+  useScore()
+  return <div></div>
+}
 
-afterEach(cleanup);
+afterEach(cleanup)
 
-let useSelectorMock: any;
-let useDispatchMock: any;
-let mockedDispatch: any;
+const mockDispatch = {
+  dispatch: jest.fn()
+}
+let store: MockStoreEnhanced<unknown, {}>
+let dispatch: jest.SpyInstance<any, any, any>
+
 describe('useScore hook', () => {
   beforeEach(() => {
-    mockedDispatch = jest.fn();
-    useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
-    useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    (useDispatchMock as jest.Mock).mockReturnValue(mockedDispatch);
-  });
+    ;(Redux.useDispatch as jest.Mock).mockImplementation(() => {
+      return mockDispatch.dispatch
+    })
+
+    const mockStore = configureStore()
+
+    store = mockStore({
+      cards: {}
+    })
+
+    dispatch = jest.spyOn(mockDispatch, 'dispatch')
+  })
 
   it('should dispatch', async () => {
-    (useSelectorMock as jest.Mock).mockReturnValue({
+    const selector = jest.spyOn(Redux, 'useSelector');
+    (Redux.useSelector as jest.Mock).mockReturnValue({
       paired: [
         { id: 1, value: 12 },
-        { id: 10, value: 12 },
+        { id: 10, value: 12 }
       ],
       list: [
         { id: 1, value: 12 },
-        { id: 10, value: 12 },
-      ],
+        { id: 10, value: 12 }
+      ]
     });
-    render(<TestComponent />);
-    await waitFor(() => expect(mockedDispatch).toHaveBeenCalledTimes(1));
-  });
+    render(
+      <Redux.Provider store={store}>
+        <BrowserRouter>
+          <TestComponent />
+        </BrowserRouter>
+      </Redux.Provider>
+    )
+    await waitFor(() => expect(selector).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(dispatch).toHaveBeenCalledTimes(1))
+  })
 
   it('should not dispatch', async () => {
-    (useSelectorMock as jest.Mock).mockReturnValue({ paired: [], list: [] });
-    render(<TestComponent />);
-    await waitFor(() => expect(mockedDispatch).not.toHaveBeenCalled());
-  });
+    ;(Redux.useSelector as jest.Mock).mockReturnValue({ paired: [], list: [] })
+
+    render(
+      <Redux.Provider store={store}>
+        <BrowserRouter>
+          <TestComponent />
+        </BrowserRouter>
+      </Redux.Provider>
+    )
+    await waitFor(() => expect(dispatch).not.toHaveBeenCalled())
+  })
 
   it('should also not dispatch', async () => {
-    (useSelectorMock as jest.Mock).mockReturnValue({
+    ;(Redux.useSelector as jest.Mock).mockReturnValue({
       paired: [
         { id: 1, value: 12 },
-        { id: 10, value: 12 },
+        { id: 10, value: 12 }
       ],
       list: [
         { id: 1, value: 12 },
         { id: 10, value: 12 },
         { id: 14, value: 16 },
-        { id: 15, value: 8 },
-      ],
-    });
-    render(<TestComponent />);
-    await waitFor(() => expect(mockedDispatch).not.toHaveBeenCalled());
-  });
-});
+        { id: 15, value: 8 }
+      ]
+    })
+
+    render(
+      <Redux.Provider store={store}>
+        <BrowserRouter>
+          <TestComponent />
+        </BrowserRouter>
+      </Redux.Provider>
+    )
+    await waitFor(() => expect(dispatch).not.toHaveBeenCalled())
+  })
+})

@@ -1,15 +1,15 @@
 import { useSelector } from 'react-redux';
 import { State } from '../../models/models';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './score.module.scss';
 
 export const Score = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { name } = useSelector((state: State) => state.user);
   const { value } = useSelector((state: State) => state.score);
 
   if (!name) {
-    history.push('/');
+    navigate('/');
   }
 
   return (
@@ -17,7 +17,7 @@ export const Score = () => {
       <button
         className='btn'
         onClick={() => {
-          history.push('/game');
+          navigate('/game');
         }}
       >
         New Game

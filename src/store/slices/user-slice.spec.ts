@@ -1,15 +1,14 @@
-import { User } from './../../models/models';
-import { MemoryActions } from '../actions/actions';
-import { userReducer } from './user.reducer';
+import { User } from '../../models/models';
+import userReducer, {
+  setUser,
+} from './user-slice'
 
 const user: User = { id: 14, name: 'User name' };
 
 describe('userReducer', () => {
+
   it('should set a user', () => {
-    const state = userReducer({} as User, {
-      type: MemoryActions.SET_USER,
-      payload: user,
-    });
+    const state = userReducer({} as User, setUser(user));
     expect(state).toEqual(user);
   });
 
@@ -21,3 +20,4 @@ describe('userReducer', () => {
     expect(state.name).not.toBeDefined();
   });
 });
+
