@@ -1,7 +1,7 @@
 import './App.scss';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Game, Score, Home } from './pages';
+import { Game, Score, Home } from './views';
 import { store } from './store/store';
 
 

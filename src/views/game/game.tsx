@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { usePairs, useScore } from '../../hooks';
-import { Grid } from '../../grid/grid';
-import { State } from '../../models/models';
-import { getCards } from '../../random-cards';
+import { Grid } from '../../common/grid/grid';
+import { State } from '../../types/models';
+import { getCards } from '../../utils/random-cards';
 import { resetCards, setCards } from '../../store/slices/cards-slice';
 
 export const Game = () => {

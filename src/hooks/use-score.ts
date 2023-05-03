@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { State, DurationRef } from '../models/models';
+import { State, DurationRef } from '../types/models';
 import { useNavigate } from 'react-router-dom';
 import { useInterval } from '../hooks';
 import { setScore } from '../store/slices/score-slice';

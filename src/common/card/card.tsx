@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Card, State } from '../models/models';
+import { Card, State } from '../../types/models';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './card.module.scss';
-import { selectCard } from '../store/slices/cards-slice';
+import { selectCard } from '../../store/slices/cards-slice';
 
 export const MemoryCard: React.FC<Card> = ({ id, value }) => {
   const dispatch = useDispatch();

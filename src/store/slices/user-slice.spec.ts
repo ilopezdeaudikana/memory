@@ -1,4 +1,4 @@
-import { User } from '../../models/models';
+import { User } from '../../types/models';
 import userReducer, {
   setUser,
 } from './user-slice'

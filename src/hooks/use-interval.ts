@@ -1,4 +1,4 @@
-import { IntervalRef } from './../models/models';
+import { IntervalRef } from '../types/models';
 import { useCallback, useEffect, useRef } from 'react';
 
 export const useInterval = (

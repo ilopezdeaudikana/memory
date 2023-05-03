@@ -1,6 +1,6 @@
 import { FormEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { User } from '../../models/models';
+import { User } from '../../types/models';
 import { useNavigate } from 'react-router-dom';
 import styles from './home.module.scss';
 import { setUser } from '../../store/slices/user-slice';

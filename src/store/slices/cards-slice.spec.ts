@@ -1,4 +1,4 @@
-import { Card } from '../../models/models'
+import { Card } from '../../types/models'
 import cardsReducer, {
   setCards,
   selectCard,

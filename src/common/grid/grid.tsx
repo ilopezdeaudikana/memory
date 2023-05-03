@@ -1,5 +1,5 @@
 import { MemoryCard } from '../card/card';
-import { Card } from '../models/models';
+import { Card } from '../../types/models';
 export const Grid: React.FC<{ list: Card[] }> = ({ list }) => {
   return (
     <div className='container'>
